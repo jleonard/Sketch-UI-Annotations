@@ -1,0 +1,23 @@
+{
+  "author" : "John Leonard",
+  "commands" : [
+    {
+      "script" : "ui-annotations.cocoascript",
+      "handler" : "onRun",
+      "shortcut" : "",
+      "name" : "Sketch UI Annotations",
+      "identifier" : "ui-annotations"
+    },
+  ],
+  "menu": {
+    "isRoot": true,
+    "items": [
+      "ui-annotations",
+    ],
+  },
+  "identifier" : "com.leonard.sketch.ui-annotations",
+  "version" : "0.1",
+  "description" : "",
+  "authorEmail" : "thejohnleonard@gmail.com",
+  "name" : "Sketch UI Annotations"
+}

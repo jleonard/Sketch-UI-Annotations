@@ -1,0 +1,77 @@
+var library = {
+  "alert":{
+    "label" : "Alert",
+    "url" : "http://styleguide.etradecreative.com/components/alerts.html"
+  },
+  "modal":{
+    "label": "Modal",
+    "url": "http://styleguide.etradecreative.com/components/modals.html"
+  },
+  "filters" : 
+  {
+    "label" :"Filters"
+  },
+  "tabs" : 
+  {
+    "label" : "Tabs"
+  }
+};
+
+function typeOf(obj) {
+    print(toString.call(obj));
+}
+
+function inLibrary(name){
+  log('checking '+name);
+  var obj = false;
+  for(var key in library){
+    //log(typeOf(key) + ' vs ' + typeOf(name));
+    if(key == name) {
+      obj = library[key]; 
+    }
+  }
+  return obj;
+}
+
+var onRun = function(context){
+
+  var group;
+  var doc = context.document;
+  doc.currentPage().deselectAllLayers();
+
+  //If we're using artboards, add to the current artboard
+  if(doc.currentPage().artboards().count() > 0) {
+    var currentArtboard = doc.currentPage().currentArtboard();
+    group = currentArtboard.addLayerOfType('group');
+  } else {
+    group = doc.currentPage().addLayerOfType('group');
+  }
+  group.setName('ETrade Annotations');
+
+  // Now, let’s iterate through all layers:
+  var all_layers = doc.currentPage().currentArtboard().layers();
+  for(var i=0; i < all_layers.count(); i++){
+    var layer = all_layers.objectAtIndex(i);
+    var annotation = inLibrary(layer.name());
+    if(annotation) {
+      var rect = group.addLayerOfType("rectangle");
+
+      var textLayer = group.addLayerOfType('text');
+      textLayer.frame().setY(layer.frame().y());
+      textLayer.frame().setX(layer.frame().x());
+      textLayer.setStringValue(annotation["label"] + '\n'+ annotation["url"]);
+      textLayer.setName(annotation["label"]);
+      textLayer.setFontSize(13);
+      textLayer.setTextColor(MSColor.colorWithSVGString("#ffffff"));
+      textLayer.adjustFrameToFit();
+
+      rect.frame().setY(layer.frame().y() - 5);
+      rect.frame().setX(layer.frame().x() - 5);
+      rect.frame().setWidth(textLayer.frame().width() + 10);
+      rect.frame().setHeight(textLayer.frame().height() + 10);
+      var fill = rect.style().fills().addNewStylePart();
+      fill.color = MSColor.colorWithSVGString("#19223C");
+
+    }
+  }
+};
