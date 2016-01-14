@@ -77,6 +77,44 @@ function makeTextLayer(group,layer,annotation){
   return textLayer;
 }
 
+/*
+var onRun = function(context){
+
+  var group;
+  var doc = context.document;
+  doc.currentPage().deselectAllLayers();
+
+  //If we're using artboards, add to the current artboard
+  if(doc.currentPage().artboards().count() > 0) {
+    var currentArtboard = doc.currentPage().currentArtboard();
+    group = currentArtboard.addLayerOfType('group');
+  } else {
+    group = doc.currentPage().addLayerOfType('group');
+  }
+  group.setName('ETrade Annotations');
+
+  // Now, let’s iterate through all layers:
+  var all_layers = doc.currentPage().currentArtboard().layers();
+  for(var i=0; i < all_layers.count(); i++){
+    var layer = all_layers.objectAtIndex(i);
+    var annotation = inLibrary(layer.name());
+    if(annotation) {
+      var textLayer = makeTextLayer(group,layer,annotation);
+      shape = drawTopRect(textLayer);
+      group.addLayers([shape]);
+      group.removeLayer(textLayer);
+      textLayer = makeTextLayer(group,layer,annotation);
+      group.addLayers[textLayer];
+    }
+  }
+
+};
+*/
+
+function createBackground(artboard){
+  var rect = artboard.addLayerOfType('rectangle');
+}
+
 var onRun = function(context){
 
   var group;
