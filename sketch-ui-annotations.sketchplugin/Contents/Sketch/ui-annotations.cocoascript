@@ -1,11 +1,11 @@
 var library = {
-  "alert":{
-    "label" : "Alert",
-    "url" : "http://styleguide.etradecreative.com/components/alerts.html"
+  "global-message":{
+    "label" : "Global Message",
+    "url" : "bit.ly/1P3rvPa"
   },
   "modal":{
     "label": "Modal",
-    "url": "http://styleguide.etradecreative.com/components/modals.html"
+    "url": "bit.ly/1OdRJRN"
   },
   "filters" : 
   {
@@ -13,7 +13,12 @@ var library = {
   },
   "tabs" : 
   {
-    "label" : "Tabs"
+    "label" : "Tabs",
+    "url": "bit.ly/1VZLFPW"
+  },
+  "button": {
+    "label" : "Button",
+    "url": "bit.ly/1SdAGTP"
   }
 };
 
@@ -31,6 +36,45 @@ function inLibrary(name){
     }
   }
   return obj;
+}
+
+function drawTopRect(textLayer){
+
+  var ty = textLayer.frame().y() - 5;
+  var tx = textLayer.frame().x() - 5;
+  var tw = textLayer.frame().width() + 10;
+  var th = textLayer.frame().height() + 10;
+
+  var path = NSBezierPath.bezierPath();
+  path.moveToPoint(NSMakePoint(tx,ty));
+  path.lineToPoint(NSMakePoint(tx,ty + th));
+
+  path.lineToPoint(NSMakePoint(tx + (tw / 2),ty + th));
+  path.lineToPoint(NSMakePoint(tx + (tw / 2) + 8,ty + th + 8));
+  path.lineToPoint(NSMakePoint(tx + (tw / 2) + 8,ty + th));
+
+  path.lineToPoint(NSMakePoint(tx + tw,ty + th));
+  path.lineToPoint(NSMakePoint(tx + tw,ty + th));
+  path.lineToPoint(NSMakePoint(tx + tw,ty));
+
+  path.closePath();
+
+  var shape = MSShapeGroup.shapeWithBezierPath(path);
+  var fill = shape.style().fills().addNewStylePart();
+  fill.color = MSColor.colorWithSVGString("#4A90E2");
+  return shape;
+}
+
+function makeTextLayer(group,layer,annotation){
+  var textLayer = group.addLayerOfType('text');
+      textLayer.frame().setY(layer.frame().y() - 42);
+      textLayer.frame().setX(layer.frame().x() + 5);
+      textLayer.setStringValue(annotation["label"] + '\n'+ annotation["url"]);
+      textLayer.setName(annotation["label"]);
+      textLayer.setFontSize(13);
+      textLayer.setTextColor(MSColor.colorWithSVGString("#ffffff"));
+      textLayer.adjustFrameToFit();
+  return textLayer;
 }
 
 var onRun = function(context){
@@ -54,24 +98,13 @@ var onRun = function(context){
     var layer = all_layers.objectAtIndex(i);
     var annotation = inLibrary(layer.name());
     if(annotation) {
-      var rect = group.addLayerOfType("rectangle");
-
-      var textLayer = group.addLayerOfType('text');
-      textLayer.frame().setY(layer.frame().y());
-      textLayer.frame().setX(layer.frame().x());
-      textLayer.setStringValue(annotation["label"] + '\n'+ annotation["url"]);
-      textLayer.setName(annotation["label"]);
-      textLayer.setFontSize(13);
-      textLayer.setTextColor(MSColor.colorWithSVGString("#ffffff"));
-      textLayer.adjustFrameToFit();
-
-      rect.frame().setY(layer.frame().y() - 5);
-      rect.frame().setX(layer.frame().x() - 5);
-      rect.frame().setWidth(textLayer.frame().width() + 10);
-      rect.frame().setHeight(textLayer.frame().height() + 10);
-      var fill = rect.style().fills().addNewStylePart();
-      fill.color = MSColor.colorWithSVGString("#19223C");
-
+      var textLayer = makeTextLayer(group,layer,annotation);
+      shape = drawTopRect(textLayer);
+      group.addLayers([shape]);
+      group.removeLayer(textLayer);
+      textLayer = makeTextLayer(group,layer,annotation);
+      group.addLayers[textLayer];
     }
   }
+
 };

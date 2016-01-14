@@ -5,7 +5,7 @@
       "script" : "ui-annotations.cocoascript",
       "handler" : "onRun",
       "shortcut" : "",
-      "name" : "Sketch UI Annotations",
+      "name" : "ETrade UI Annotations",
       "identifier" : "ui-annotations"
     },
   ],
@@ -19,5 +19,5 @@
   "version" : "0.1",
   "description" : "",
   "authorEmail" : "thejohnleonard@gmail.com",
-  "name" : "Sketch UI Annotations"
+  "name" : "ETrade UI Annotations"
 }
