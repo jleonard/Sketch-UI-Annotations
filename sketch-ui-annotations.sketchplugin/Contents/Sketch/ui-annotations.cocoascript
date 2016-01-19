@@ -21,6 +21,17 @@ var library = {
   },
   "button": {
     "label" : "Button",
+    "css" : ".btn",
+    "url": "bit.ly/1SdAGTP"
+  },
+  "primary-button": {
+    "label" : "Primary Button",
+    "css" : ".btn.btn-primary",
+    "url": "bit.ly/1SdAGTP"
+  },
+  "table": {
+    "label" : "Sortable Table",
+    "css": "table.sortable",
     "url": "bit.ly/1SdAGTP"
   }
 };
@@ -28,7 +39,7 @@ var library = {
 var templates = {
   'template-x' : {
     "label" : "Template X",
-    "url" : "http://styleguide.etradecreative.com/url"
+    "url" : "http://styleguide.etradecreative.com/template-x"
   }
 };
 
@@ -37,13 +48,15 @@ var config = {
 };
 
 var yPos = 20;
-var eNum = 0;
+var eNum = 1;
 
 function typeOf(obj) {
     print(toString.call(obj));
 }
 
 function inLibrary(name){
+  //name = name.toString().replace(/ /g, '-').toLowerCase();
+  log(name);
   var obj = false;
   for(var key in library){
     //log(typeOf(key) + ' vs ' + typeOf(name));
@@ -55,6 +68,8 @@ function inLibrary(name){
 }
 
 function inTemplates(name){
+  //name = name.replace(/ /g, '-').toLowerCase();
+  log(name);
   var obj = false;
   for(var key in templates){
     if(key == name) {
@@ -147,7 +162,7 @@ function createContainer(artboard,group){
   artboard.frame().setWidth( artboard.frame().width() + 500 );
 
   var rect = group.addLayerOfType('rectangle');
-      rect.frame().setY(ay);
+      rect.frame().setY(0);
       rect.frame().setX(aw);
       rect.frame().setWidth(500);
       rect.frame().setHeight(ah);
@@ -218,7 +233,6 @@ var onRun = function(context){
         txt = makeText(annotation.url,13,'#d6d6d6',group);
         txt.frame().setY(yPos);
         txt.frame().setX(aw + config.padding + 42);
-        //bumpYPos(txt,5);
         
         bumpYPos(txt,15);
         eNum++;
