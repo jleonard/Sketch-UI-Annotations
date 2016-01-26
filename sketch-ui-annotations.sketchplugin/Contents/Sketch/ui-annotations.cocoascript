@@ -177,6 +177,53 @@ function createContainer(artboard,group){
 
 }
 
+function render(artboard_width,layer,group){
+  if(layer.class() == "MSLayerGroup" || layer.class() == "MSArtboardGroup"){
+    renderGroup(artboard_width,layer,group);
+  }else{
+    renderLayer(artboard_width,layer,group);
+  }
+}
+
+function renderGroup(artboard_width,layer,group){
+  log('group type :::: '+layer.class());
+  renderLayer(artboard_width,layer,group);
+  var layers = layer.layers();
+  for(var i=0; i < layers.count(); i++){
+    var l = layers.objectAtIndex(i);
+    render(artboard_width,l,group);
+  }
+}
+
+function renderLayer(artboard_width,layer,group){
+
+  log('layer type :::: '+layer.class());
+  log('layer name :::: ' + layer.name());
+  var annotation = inLibrary(layer.name());
+  if(annotation) {
+
+    var dot = makeDot(layer.frame().x(),layer.frame().y(),group);
+    var alt = makeDot(artboard_width + config.padding, yPos, group);
+
+    var txt = makeText(annotation.label,18,'#d6d6d6',group);
+    txt.frame().setY(yPos);
+    txt.frame().setX(artboard_width + config.padding + 42);
+    bumpYPos(txt,5);
+
+    txt = makeText(annotation.css,13,'#d6d6d6',group);
+    txt.frame().setY(yPos);
+    txt.frame().setX(artboard_width + config.padding + 42);
+    bumpYPos(txt,5);
+
+    txt = makeText(annotation.url,13,'#d6d6d6',group);
+    txt.frame().setY(yPos);
+    txt.frame().setX(artboard_width + config.padding + 42);
+    
+    bumpYPos(txt,15);
+    eNum++;
+  }
+}
+
 var onRun = function(context){
 
   var group;
@@ -211,6 +258,9 @@ var onRun = function(context){
     }
 
     // Now, let’s iterate through all layers:
+    var all_layers = doc.currentPage().currentArtboard();//.layers();
+    render(aw,all_layers,group);
+    /* this was the old way. not recursive
     var all_layers = doc.currentPage().currentArtboard().layers();
     for(var i=0; i < all_layers.count(); i++){
       var layer = all_layers.objectAtIndex(i);
@@ -238,6 +288,7 @@ var onRun = function(context){
         eNum++;
       }
     }
+    */
 
   }
 
