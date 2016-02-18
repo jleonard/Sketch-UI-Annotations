@@ -4,7 +4,13 @@ var library = {
   {
     "label" : "Tabs",
     "css" : ".tabs",
-    "url": "http://styleguide.etradecreative.com/navigation/major-tabs.html"
+    "url": "http://styleguide.etradecreative.com/navigation/tabs.html"
+  },
+  "stacked-tabs" : 
+  {
+    "label" : "Stacked Tabs",
+    "css" : ".nav-stacked",
+    "url": "http://styleguide.etradecreative.com/navigation/tabs.html#stacked-tabs"
   },
   "button": {
     "label" : "Button",
