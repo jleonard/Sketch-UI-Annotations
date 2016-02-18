@@ -1,44 +1,121 @@
 var library = {
-  "global-message":{
-    "label" : "Global Message",
-    "css" : ".global-message",
-    "url" : "bit.ly/1P3rvPa"
-  },
-  "modal":{
-    "label": "Modal",
-    "css" : ".global-message",
-    "url": "bit.ly/1OdRJRN"
-  },
-  "filters" : 
-  {
-    "label" :"Filters"
-  },
+  
   "tabs" : 
   {
     "label" : "Tabs",
-    "css" : ".global-message",
-    "url": "bit.ly/1VZLFPW"
+    "css" : ".tabs",
+    "url": "http://styleguide.etradecreative.com/navigation/major-tabs.html"
   },
   "button": {
     "label" : "Button",
     "css" : ".btn",
-    "url": "bit.ly/1SdAGTP"
+    "url": "http://styleguide.etradecreative.com/elements/buttons.html"
+  }
+  "disabled-button": {
+    "label" : "Disabled Button",
+    "css" : ".btn [disabled='disabled']",
+    "url": "http://styleguide.etradecreative.com/elements/buttons.html"
+  }
+};
+
+var deprecated_library = {
+  "global-message":{
+    "label" : "Global Message",
+    "css" : ".global-message",
+    "url" : "http://styleguide.etradecreative.com/components/alerts.html"
+  },
+  "modal":{
+    "label": "Modal",
+    "css" : ".modal",
+    "url": "http://styleguide.etradecreative.com/components/modals.html"
+  },
+  "filters" : 
+  {
+    "label" :"Filters",
+    "css" : ".filters",
+    "url": "http://styleguide.etradecreative.com/navigation/filters.html"
+  },
+  "tabs" : 
+  {
+    "label" : "Tabs",
+    "css" : ".tabs",
+    "url": "http://styleguide.etradecreative.com/navigation/major-tabs.html"
+  },
+  "button": {
+    "label" : "Button",
+    "css" : ".btn",
+    "url": "http://styleguide.etradecreative.com/elements/buttons.html"
   },
   "primary-button": {
     "label" : "Primary Button",
     "css" : ".btn.btn-primary",
-    "url": "bit.ly/1SdAGTP"
+    "url": "http://styleguide.etradecreative.com/elements/buttons.html"
+  },
+  "btn-primary-disabled": {
+    "label" : "Disabled Primary Button",
+    "css" : ".btn.btn-primary [disabled]",
+    "url": "http://styleguide.etradecreative.com/elements/buttons.html"
   },
   "table": {
     "label" : "Sortable Table",
     "css": "table.sortable",
-    "url": "bit.ly/1SdAGTP"
+    "url": "http://styleguide.etradecreative.com/components/tables.html"
+  },
+  "hopper-nav":{
+    "label" : "Hopper Navigation",
+    "css" : ".hopper-nav",
+    "url" : "http://styleguide.etradecreative.com/navigation/hopper-utility.html"
+  },
+  "utility-menu":{
+    "label" : "Utility Menu",
+    "css" : ".utility-menu",
+    "url" : "http://styleguide.etradecreative.com/navigation/hopper-utility.html"
+  },
+  "page-title":{
+    "label" : "Page Title",
+    "css" : ".page-title",
+    "url" : "http://styleguide.etradecreative.com/typography.html"
+  },
+  "mini-chain":{
+    "label" : "Options Mini Chain",
+    "css" : ".mini-chain",
+    "url" : "http://styleguide.etradecreative.com/options.html"
+  },
+  "et-select":{
+    "label" : "Select Control",
+    "css" : ".et-select",
+    "url" : "http://styleguide.etradecreative.com/select.html"
+  },
+  "account-summary":{
+    "label" : "Account Summary Pattern",
+    "css" : ".account-summary",
+    "url" : "http://styleguide.etradecreative.com/account-summary.html"
+  },
+  "page-refresh":{
+    "label" : "Page Refresh",
+    "css" : ".page-refresh",
+    "url" : "http://styleguide.etradecreative.com/page-refresh.html"
+  },
+  "pills":{
+    "label" : "Pills",
+    "css" : ".pills",
+    "url" : "http://styleguide.etradecreative.com/pills.html"
+  },
+  "disclaimer":{
+    "label" : "Disclaimer",
+    "css" : ".disclaimer",
+    "url" : "http://styleguide.etradecreative.com/disclaimer.html"
+  },
+  "inputy":{
+    "label" : "Text Input",
+    "css" : "input type='text'",
+    "url" : "http://styleguide.etradecreative.com/input.html"
   }
 };
 
 var templates = {
-  'template-x' : {
-    "label" : "Template X",
+  'right-column-template' : {
+    "label" : "Right Column Template",
     "url" : "http://styleguide.etradecreative.com/template-x"
   }
 };
@@ -55,11 +132,9 @@ function typeOf(obj) {
 }
 
 function inLibrary(name){
-  //name = name.toString().replace(/ /g, '-').toLowerCase();
-  log(name);
+  //log(name);
   var obj = false;
   for(var key in library){
-    //log(typeOf(key) + ' vs ' + typeOf(name));
     if(key == name) {
       obj = library[key]; 
     }
@@ -68,8 +143,7 @@ function inLibrary(name){
 }
 
 function inTemplates(name){
-  //name = name.replace(/ /g, '-').toLowerCase();
-  log(name);
+  //log(name);
   var obj = false;
   for(var key in templates){
     if(key == name) {
@@ -77,33 +151,6 @@ function inTemplates(name){
     }
   }
   return obj;
-}
-
-function drawTopRect(textLayer){
-
-  var ty = textLayer.frame().y() - 5;
-  var tx = textLayer.frame().x() - 5;
-  var tw = textLayer.frame().width() + 10;
-  var th = textLayer.frame().height() + 10;
-
-  var path = NSBezierPath.bezierPath();
-  path.moveToPoint(NSMakePoint(tx,ty));
-  path.lineToPoint(NSMakePoint(tx,ty + th));
-
-  path.lineToPoint(NSMakePoint(tx + (tw / 2),ty + th));
-  path.lineToPoint(NSMakePoint(tx + (tw / 2) + 8,ty + th + 8));
-  path.lineToPoint(NSMakePoint(tx + (tw / 2) + 8,ty + th));
-
-  path.lineToPoint(NSMakePoint(tx + tw,ty + th));
-  path.lineToPoint(NSMakePoint(tx + tw,ty + th));
-  path.lineToPoint(NSMakePoint(tx + tw,ty));
-
-  path.closePath();
-
-  var shape = MSShapeGroup.shapeWithBezierPath(path);
-  var fill = shape.style().fills().addNewStylePart();
-  fill.color = MSColor.colorWithSVGString("#4A90E2");
-  return shape;
 }
 
 function makeTextLayer(group,layer,annotation){
@@ -166,7 +213,7 @@ function createContainer(artboard,group){
       rect.frame().setX(aw);
       rect.frame().setWidth(500);
       rect.frame().setHeight(ah);
-      var fill = rect.style().fills().addNewStylePart();
+  var fill = rect.style().fills().addNewStylePart();
       fill.color = MSColor.colorWithSVGString("#393B36");
   
   var label = makeText('E*TRADE\nDesign Language Annotations',24,'#666666',group);
@@ -186,7 +233,7 @@ function render(artboard_width,layer,group){
 }
 
 function renderGroup(artboard_width,layer,group){
-  log('group type :::: '+layer.class());
+  //log('group type :::: '+layer.class());
   renderLayer(artboard_width,layer,group);
   var layers = layer.layers();
   for(var i=0; i < layers.count(); i++){
@@ -197,8 +244,8 @@ function renderGroup(artboard_width,layer,group){
 
 function renderLayer(artboard_width,layer,group){
 
-  log('layer type :::: '+layer.class());
-  log('layer name :::: ' + layer.name());
+  //log('layer type :::: '+layer.class());
+  //log('layer name :::: ' + layer.name());
   var annotation = inLibrary(layer.name());
   if(annotation) {
 
@@ -260,35 +307,6 @@ var onRun = function(context){
     // Now, let’s iterate through all layers:
     var all_layers = doc.currentPage().currentArtboard();//.layers();
     render(aw,all_layers,group);
-    /* this was the old way. not recursive
-    var all_layers = doc.currentPage().currentArtboard().layers();
-    for(var i=0; i < all_layers.count(); i++){
-      var layer = all_layers.objectAtIndex(i);
-      var annotation = inLibrary(layer.name());
-      if(annotation) {
-
-        var dot = makeDot(layer.frame().x(),layer.frame().y(),group);
-        var alt = makeDot(aw + config.padding, yPos, group);
-
-        var txt = makeText(annotation.label,18,'#d6d6d6',group);
-        txt.frame().setY(yPos);
-        txt.frame().setX(aw + config.padding + 42);
-        bumpYPos(txt,5);
-
-        txt = makeText(annotation.css,13,'#d6d6d6',group);
-        txt.frame().setY(yPos);
-        txt.frame().setX(aw + config.padding + 42);
-        bumpYPos(txt,5);
-
-        txt = makeText(annotation.url,13,'#d6d6d6',group);
-        txt.frame().setY(yPos);
-        txt.frame().setX(aw + config.padding + 42);
-        
-        bumpYPos(txt,15);
-        eNum++;
-      }
-    }
-    */
 
   }
 
