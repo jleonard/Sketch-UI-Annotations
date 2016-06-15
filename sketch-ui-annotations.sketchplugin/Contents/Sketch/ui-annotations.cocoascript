@@ -1,9 +1,33 @@
 var library = {
-  
+   "alert":{
+    "label" : "Alert",
+    "css" : "*alert",
+    "url" : "http://styleguide.etradecreative.com/components/alerts.html"
+  },
+  "filters":{
+    "label" : "Filters",
+    "css" : "*filters",
+    "url" : "http://styleguide.etradecreative.com/components/filters.html"
+  },
+  "balance-summary":{
+    "label" : "Balance Summary",
+    "css" : "*balance-summary",
+    "url" : "http://styleguide.etradecreative.com/patterns/balance-summary.html"
+  },
+  "alert-panel":{
+    "label" : "Alert Panel",
+    "css" : "*panel-alerts",
+    "url" : "http://styleguide.etradecreative.com/patterns/alert-panel.html"
+  },
+  "global-message":{
+    "label" : "Global Message",
+    "css" : "*global-message",
+    "url" : "http://styleguide.etradecreative.com/components/alerts.html"
+  },
   "tabs" : 
   {
     "label" : "Tabs",
-    "css" : ".tabs",
+    "css" : "*tabs",
     "url": "http://styleguide.etradecreative.com/navigation/tabs.html"
   },
   "stacked-tabs" : 
@@ -14,13 +38,43 @@ var library = {
   },
   "button": {
     "label" : "Button",
-    "css" : ".btn",
+    "css" : "*btn",
     "url": "http://styleguide.etradecreative.com/elements/buttons.html"
-  }
+  },
   "disabled-button": {
     "label" : "Disabled Button",
     "css" : ".btn [disabled='disabled']",
     "url": "http://styleguide.etradecreative.com/elements/buttons.html"
+  },
+  "hopper-nav":{
+    "label" : "Hopper Navigation",
+    "css" : "*hopper-nav",
+    "url" : "http://styleguide.etradecreative.com/navigation/hopper-utility.html"
+  },
+  "utility-menu":{
+    "label" : "Utility Menu",
+    "css" : "*utility-menu",
+    "url" : "http://styleguide.etradecreative.com/navigation/hopper-utility.html"
+  },
+  "pills":{
+    "label" : "Nav Pills",
+    "css" : "*pills",
+    "url" : "http://styleguide.etradecreative.com/components/pills.html"
+  },
+  "table":{
+    "label" : "Basic Table",
+    "css" : "*table",
+    "url" : "http://styleguide.etradecreative.com/components/table.html"
+  },
+  "page-refresh":{
+    "label" : "Page Refresh",
+    "css" : "*page-refresh",
+    "url" : "http://styleguide.etradecreative.com/components/table.html"
+  },
+  "select":{
+    "label" : "Select",
+    "css" : "*et-select",
+    "url" : "http://styleguide.etradecreative.com/select.html"
   }
 };
 
@@ -123,18 +177,22 @@ var templates = {
   'right-column-template' : {
     "label" : "Right Column Template",
     "url" : "http://styleguide.etradecreative.com/template-x"
+  },
+  'two-column-layout' : {
+    "label" : "Two Column Layout",
+    "url" : "http://styleguide.etradecreative.com/page-templates/two-column-layout"
   }
 };
 
 var config = {
-  padding: 20
+  padding: 30
 };
 
 var yPos = 20;
 var eNum = 1;
 
-function typeOf(obj) {
-    print(toString.call(obj));
+function typeOf(obj){
+  print(toString.call(obj));
 }
 
 function inLibrary(name){
@@ -187,7 +245,7 @@ function makeDot(x,y,group){
   var ovalShape = MSOvalShape.alloc().initWithFrame(NSMakeRect(x,y,30,30));
   var shapeGroup = MSShapeGroup.shapeWithPath(ovalShape)
   var fill = shapeGroup.style().fills().addNewStylePart();
-      fill.color = MSColor.colorWithSVGString('#cc3300');
+      fill.color = MSColor.colorWithSVGString('#CB429F');
 
       dot.addLayers([shapeGroup]);
 
@@ -226,7 +284,25 @@ function createContainer(artboard,group){
       label.frame().setX(aw + config.padding);
       label.frame().setY(yPos);
 
-  bumpYPos(label,20);
+  bumpYPos(label,5);
+
+  var d = new Date();
+  var months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  var day = d.getDate() < 9 ? '0' + d.getDate() : d.getDate();
+  var dateText = months[d.getMonth()] + ' ' + day + ', '+ d.getFullYear();
+  var author = makeText('Created: ' + dateText + ' by ' + NSUserName(), 12, '#666666',group);
+      author.frame().setX(aw + config.padding);
+      author.frame().setY(yPos);
+  bumpYPos(author,15);
+
+  /*
+  
+  
+  var date = makeText('Created on: ' + dateText, 12, '#666666',group);
+      date.frame().setX(aw + config.padding);
+      date.frame().setY(yPos);
+  bumpYPos(date,15);
+  */
 
 }
 
@@ -250,8 +326,6 @@ function renderGroup(artboard_width,layer,group){
 
 function renderLayer(artboard_width,layer,group){
 
-  //log('layer type :::: '+layer.class());
-  //log('layer name :::: ' + layer.name());
   var annotation = inLibrary(layer.name());
   if(annotation) {
 
@@ -309,6 +383,11 @@ var onRun = function(context){
 
       bumpYPos(txt,32);
     }
+
+    var txt = makeText('UI Components',13,'#666666',group);
+      txt.frame().setY(yPos);
+      txt.frame().setX(aw + config.padding);
+      bumpYPos(txt,8);
 
     // Now, let’s iterate through all layers:
     var all_layers = doc.currentPage().currentArtboard();//.layers();
